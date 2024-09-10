@@ -1,0 +1,54 @@
+create database shop;
+
+CREATE TABLE users (
+    user_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    is_admin TINYINT(1) NOT NULL DEFAULT 0,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE products (
+    product_id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price VARCHAR(50) NOT NULL,
+    size VARCHAR(50) NOT NULL,
+    image VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+INSERT INTO products (name, price, size, image) VALUES
+('Heineken', '2.50', '0.5L', 'images/heineken.png'),
+('Jelen Pivo', '1.80', '0.5L', 'images/jelen.png'),
+('Budweiser', '2.70', '0.5L', 'images/budweiser.png'),
+('Tuborg', '2.20', '0.5L', 'images/tuborg.png'),
+('Stella Artois', '2.90', '0.5L', 'images/stella_artois.png'),
+('Corona', '3.00', '0.33L', 'images/corona.png');
+
+CREATE TABLE cart (
+    cart_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(user_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
+CREATE TABLE orders (
+    order_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    delivery_address VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE order_items (
+    order_items_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity VARCHAR(255) NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+
