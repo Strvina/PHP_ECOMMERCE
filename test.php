@@ -10,4 +10,6 @@ if ($user->is_logged()) {
 } else {
     echo "User is not logged in.";
 }
+
+echo "GASGASGAS";
 ?>

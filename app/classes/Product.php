@@ -45,4 +45,15 @@ class Product{
         $stmt->execute();
          
     }
+
+    public function trazi($trazi) {
+        $trazi = "%" . $trazi . "%";
+        $sql = "SELECT * FROM products WHERE name LIKE ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("s", $trazi);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+    
 }
