@@ -41,5 +41,12 @@ class Cart{
         $stmt->execute();
     }
 
+    public function remove_item($product_id) {
+        $stmt = $this->conn->prepare("DELETE FROM cart WHERE user_id = ? AND product_id = ?");
+        $stmt->bind_param("ii", $_SESSION['user_id'], $product_id);
+        $stmt->execute();
+    }
+    
+
 
 }

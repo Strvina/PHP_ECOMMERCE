@@ -43,6 +43,16 @@ class Order extends Cart{
 
                 return $result->fetch_all(MYSQLI_ASSOC);
     }
-}
 
+    public function cancel_order($order_id) {
+        $stmt = $this->conn->prepare("DELETE FROM order_items WHERE order_id = ?");
+        $stmt->bind_param("i", $order_id);
+        $stmt->execute();
+    
+        $stmt = $this->conn->prepare("DELETE FROM orders WHERE order_id = ?");
+        $stmt->bind_param("i", $order_id);
+        $stmt->execute();
+    }
+    
+}
 ?>
