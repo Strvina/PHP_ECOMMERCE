@@ -12,8 +12,9 @@ if ($user->is_logged() && ($user->is_admin() || $user->is_tatko())) :
         $price = $_POST['price'];
         $size = $_POST['size'];
         $image = $_POST['photo_path'];
+        $category=$_POST['category'];
 
-        $product->add($name, $price, $size, $image);
+        $product->add($name, $price, $size, $image, $category);
         header('Location: index.php');
         exit();
     }
@@ -30,7 +31,9 @@ endif;
     <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 </head>
 <body>
+    
     <div class="container mt-5">
+    <a href="index.php" class="btn btn-secondary mb-4">Back to Admin Panel</a>
         <h2 class="mb-4">Add New Product</h2>
         <form action="" method="POST" class="form-group">
             <div class="form-group">
@@ -44,6 +47,10 @@ endif;
             <div class="form-group">
                 <label for="size">Size</label>
                 <input type="text" class="form-control" id="size" name="size" placeholder="Enter size" required>
+            </div>
+            <div class="form-group">
+                <label for="category">Category</label>
+                <input type="text" class="form-control" id="category" name="category" placeholder="Enter category" required>
             </div>
             <div class="form-group">
                 <label for="dropzone-upload">Upload Image</label>

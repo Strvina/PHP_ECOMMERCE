@@ -26,11 +26,11 @@ class Product
         return $result->fetch_assoc();
     }
 
-    public function add($name, $price, $size, $image)
+    public function add($name, $price, $size, $image, $category)
     {
-        $sql = "INSERT INTO products (name, price, size, image) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO products (name, price, size, category, image) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("ssss", $name, $price, $size, $image);
+        $stmt->bind_param("sssss", $name, $price, $size,$category, $image);
         $stmt->execute();
     }
 
