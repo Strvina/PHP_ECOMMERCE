@@ -10,10 +10,16 @@ $price_order = isset($_GET['price']) ? $_GET['price'] : '';
 
 if (!empty($search)) {
     // Pretraži proizvode
-    $results = $products->trazi($search);
+    $results = $products->trazi($search, $category);
 } else {
     if (!empty($category)) {
-        $results = $products->sortByCategory($category);
+        if ($price_order === 'asc') {
+            $results = $products->sortByPriceAsc($category);
+        } elseif ($price_order === 'desc') {
+            $results = $products->sortByPriceDesc($category);
+        } else {
+            $results = $products->sortByCategory($category);
+        }
     } elseif ($price_order === 'asc') {
         $results = $products->sortByPriceAsc();
     } elseif ($price_order === 'desc') {

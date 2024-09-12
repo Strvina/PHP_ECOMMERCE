@@ -52,17 +52,23 @@ class Product
         $stmt->execute();
     }
 
-    public function trazi($trazi)
-    {
+    public function trazi($trazi, $category = '') {
         $trazi = "%" . $trazi . "%";
-        $sql = "SELECT * FROM products WHERE name LIKE ?";
+        $categoryFilter = !empty($category) ? "AND category = ?" : "";
+        $sql = "SELECT * FROM products WHERE name LIKE ? $categoryFilter";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param("s", $trazi);
+        if (!empty($category)) {
+            $stmt->bind_param("ss", $trazi, $category);
+        } else {
+            $stmt->bind_param("s", $trazi);
+        }
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
 
+    // Update this method if you need to check category more specifically
     public function sortByCategory($category)
     {
         $category = "%" . $category . "%";
@@ -74,17 +80,28 @@ class Product
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function sortByPriceAsc()
-    {
-        $sql = "SELECT * FROM products ORDER BY price ASC";
-        $result = $this->conn->query($sql);
+
+    public function sortByPriceAsc($category = '') {
+        $categoryFilter = !empty($category) ? "WHERE category = ?" : "";
+        $sql = "SELECT * FROM products $categoryFilter ORDER BY price ASC";
+        $stmt = $this->conn->prepare($sql);
+        if (!empty($category)) {
+            $stmt->bind_param("s", $category);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-
-    public function sortByPriceDesc()
-    {
-        $sql = "SELECT * FROM products ORDER BY price DESC";
-        $result = $this->conn->query($sql);
+    
+    public function sortByPriceDesc($category = '') {
+        $categoryFilter = !empty($category) ? "WHERE category = ?" : "";
+        $sql = "SELECT * FROM products $categoryFilter ORDER BY price DESC";
+        $stmt = $this->conn->prepare($sql);
+        if (!empty($category)) {
+            $stmt->bind_param("s", $category);
+        }
+        $stmt->execute();
+        $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 

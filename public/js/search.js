@@ -2,19 +2,26 @@ document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search');
     const categoryFilter = document.getElementById('category-filter');
     const priceFilter = document.getElementById('price-filter');
+    const searchResults = document.getElementById('search-results');
 
     function fetchResults() {
         const query = searchInput.value;
         const category = categoryFilter.value;
         const price = priceFilter.value;
 
-        fetch(`search.php?search=${encodeURIComponent(query)}&category=${encodeURIComponent(category)}&price=${encodeURIComponent(price)}`)
+        const url = new URL('search.php', window.location.href);
+        if (query) url.searchParams.append('search', query);
+        if (category) url.searchParams.append('category', category);
+        if (price) url.searchParams.append('price', price);
+
+        // Fetch new results
+        fetch(url)
             .then(response => response.text())
             .then(data => {
-                document.getElementById('search-results').innerHTML = data;
+                searchResults.innerHTML = data;
             })
             .catch(error => {
-                document.getElementById('search-results').innerHTML = '<div class="alert alert-danger">An error occurred.</div>';
+                searchResults.innerHTML = '<div class="alert alert-danger">An error occurred.</div>';
                 console.error('Fetch error:', error);
             });
     }
