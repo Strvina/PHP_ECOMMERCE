@@ -5,7 +5,7 @@ require '../app/classes/Product.php';
 
 $user = new User();
 
-if ($user->is_logged() && ($user->is_admin() || $user->is_tatko())) : 
+if ($user->is_logged() && ($user->is_admin() || $user->is_tatko())): 
 
 $products = new Product();
 $products = $products->izlistajSve();
@@ -32,6 +32,9 @@ $products = $products->izlistajSve();
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="manage_users.php">Manage Users</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="orders_status.php">Manage Orders</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../logout.php">Logout</a>
@@ -65,7 +68,7 @@ $products = $products->izlistajSve();
                         <td><?php echo $product['name']; ?></td>
                         <td>$<?php echo $product['price']; ?></td>
                         <td><?php echo $product['size']; ?></td>
-                        <td><?php echo $product['image']; ?></td>
+                        <td><img src="../public/product_images/<?php echo $product['image']; ?>" height="50"></td>
                         <td><?php echo $product['created_at']; ?></td>
                         <td>
                             <a href="edit_product.php?id=<?php echo $product['product_id']; ?>" class="btn btn-primary btn-sm">Edit</a>

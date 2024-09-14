@@ -1,0 +1,4 @@
+.status-primljeno { background-color: #d4edda; } /* Green */
+.status-poslato { background-color: #fff3cd; }   /* Yellow */
+.status-stiglo { background-color: #cce5ff; }    /* Blue */
+.status-otkazano { background-color: #f8d7da; }  /* Red */

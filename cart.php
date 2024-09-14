@@ -32,7 +32,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 }
 
-
 $cart_items = $cart->get_cart_items();
 ?>
 
@@ -48,31 +47,39 @@ $cart_items = $cart->get_cart_items();
         </tr>
     </thead>
     <tbody>
-        <?php foreach ($cart_items as $item): ?>
+        <?php if (!empty($cart_items)): ?>
+            <?php foreach ($cart_items as $item): ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($item['name']); ?></td>
+                    <td><?php echo htmlspecialchars($item['size']); ?></td>
+                    <td>$<?php echo htmlspecialchars($item['price']); ?></td>
+                    <td>
+                        <form action="cart.php" method="post">
+                            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($item['product_id']); ?>">
+                            <input type="number" name="quantity" value="<?php echo htmlspecialchars($item['quantity']); ?>" min="1">
+                            <button type="submit" class="btn btn-primary btn-sm">Update quantity</button>
+                        </form>
+                    </td>
+                    <td><img src="public/product_images/<?php echo htmlspecialchars($item['image']); ?>" height="50"></td>
+                    <td>
+                        <form action="cart.php" method="post">
+                            <input type="hidden" name="product_id" value="<?php echo htmlspecialchars($item['product_id']); ?>">
+                            <input type="hidden" name="action" value="delete">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete item</button>
+                        </form>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        <?php else: ?>
             <tr>
-                <td><?php echo $item['name']; ?></td>
-                <td><?php echo $item['size']; ?></td>
-                <td>$<?php echo $item['price']; ?></td>
-                <td>
-                    <form action="cart.php" method="post">
-                        <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
-                        <input type="number" name="quantity" value="<?php echo $item['quantity']; ?>" min="1">
-                        <button type="submit" class="btn btn-primary btn-sm">Update quantity</button>
-                    </form>
-                </td>
-                <td><img src="public/product_images/<?php echo $item['image']; ?>" height="50"></td>
-                <td>
-                    <form action="cart.php" method="post">
-                        <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
-                        <input type="hidden" name="action" value="delete">
-                        <button type="submit" class="btn btn-danger btn-sm">Delete item</button>
-                    </form>
-                </td>
+                <td colspan="6"><div class="alert alert-warning">Your cart is empty.</div></td>
             </tr>
-        <?php endforeach; ?>
+        <?php endif; ?>
     </tbody>
 </table>
 
-<a href="checkout.php" class="btn btn-success">Checkout</a>
+<?php if (!empty($cart_items)): ?>
+    <a href="checkout.php" class="btn btn-success">Checkout</a>
+<?php endif; ?>
 
 <?php require_once 'inc/footer.php'; ?>
