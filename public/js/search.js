@@ -9,12 +9,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const category = categoryFilter.value;
         const price = priceFilter.value;
 
+        // Resetovanje URL-a
         const url = new URL('search.php', window.location.href);
+
+        // Dodavanje parametara pretrage
         if (query) url.searchParams.append('search', query);
         if (category) url.searchParams.append('category', category);
-        if (price) url.searchParams.append('price', price);
+        if (price) url.searchParams.append('price', price);  // Dodajemo parametar 'price'
 
-        // Fetch new results
+        // Fetching results
         fetch(url)
             .then(response => response.text())
             .then(data => {
@@ -26,10 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     }
 
+    // Event listener za pretragu i filtere
     searchInput.addEventListener('keyup', fetchResults);
     categoryFilter.addEventListener('change', fetchResults);
     priceFilter.addEventListener('change', fetchResults);
 
-    // Initial load
+    // Učitavanje inicijalnih rezultata
     fetchResults();
 });

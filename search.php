@@ -8,9 +8,25 @@ $search = isset($_GET['search']) ? $_GET['search'] : '';
 $category = isset($_GET['category']) ? $_GET['category'] : '';
 $price_order = isset($_GET['price']) ? $_GET['price'] : '';
 
+
 if (!empty($search)) {
-    // Pretraži proizvode
-    $results = $products->trazi($search, $category);
+    if (!empty($category)) {
+        if ($price_order === 'asc') {
+            $results = $products->searchAndSortByPriceAsc($search, $category);
+        } elseif ($price_order === 'desc') {
+            $results = $products->searchAndSortByPriceDesc($search, $category);
+        } else {
+            $results = $products->trazi($search, $category);
+        }
+    } else {
+        if ($price_order === 'asc') {
+            $results = $products->searchAndSortByPriceAsc($search);
+        } elseif ($price_order === 'desc') {
+            $results = $products->searchAndSortByPriceDesc($search);
+        } else {
+            $results = $products->trazi($search);
+        }
+    }
 } else {
     if (!empty($category)) {
         if ($price_order === 'asc') {
@@ -28,6 +44,8 @@ if (!empty($search)) {
         $results = $products->izlistajSve();
     }
 }
+
+
 
 if (empty($results)) {
     echo '<div class="alert alert-warning">No items found.</div>';

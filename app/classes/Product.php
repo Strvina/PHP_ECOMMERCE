@@ -17,14 +17,14 @@ class Product
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function citajJedan($product_id)
-    {
-        $stmt = $this->conn->prepare("SELECT * FROM products WHERE product_id=?");
-        $stmt->bind_param("i", $product_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        return $result->fetch_assoc();
-    }
+    public function citajJedan($product_id) {
+    $query = "SELECT * FROM products WHERE product_id = ?";
+    $stmt = $this->conn->prepare($query);
+    $stmt->bind_param("i", $product_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_assoc();
+}
 
     public function add($name, $price, $size, $image, $category)
     {
@@ -66,9 +66,7 @@ class Product
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
-    
 
-    // Update this method if you need to check category more specifically
     public function sortByCategory($category)
     {
         $category = "%" . $category . "%";
@@ -80,6 +78,12 @@ class Product
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function getCategories()
+    {
+        $query = "SELECT DISTINCT category FROM products";
+        $result = $this->conn->query($query);
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 
     public function sortByPriceAsc($category = '') {
         $categoryFilter = !empty($category) ? "WHERE category = ?" : "";
@@ -105,12 +109,44 @@ class Product
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-
-
-    public function getCategories()
-    {
-        $query = "SELECT DISTINCT category FROM products";
-        $result = $this->conn->query($query);
+    public function searchAndSortByPriceAsc($search, $category = '') {
+        $search = "%" . $search . "%";
+        $categoryFilter = !empty($category) ? "AND category = ?" : "";
+        $sql = "SELECT * FROM products WHERE name LIKE ? $categoryFilter ORDER BY price ASC";
+        $stmt = $this->conn->prepare($sql);
+        
+        if (!empty($category)) {
+            $stmt->bind_param("ss", $search, $category);
+        } else {
+            $stmt->bind_param("s", $search);
+        }
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+    
+    public function searchAndSortByPriceDesc($search, $category = '') {
+        $search = "%" . $search . "%";
+        $categoryFilter = !empty($category) ? "AND category = ?" : "";
+        $sql = "SELECT * FROM products WHERE name LIKE ? $categoryFilter ORDER BY price DESC";
+        $stmt = $this->conn->prepare($sql);
+        
+        if (!empty($category)) {
+            $stmt->bind_param("ss", $search, $category);
+        } else {
+            $stmt->bind_param("s", $search);
+        }
+        
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getExclusiveProduct() {
+        $sql = "SELECT * FROM products WHERE type = 1 ORDER BY RAND() LIMIT 1";
+        $result = $this->conn->query($sql);
+        return $result->fetch_assoc();
+    }
+
 }

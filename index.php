@@ -4,11 +4,10 @@ require_once 'app/classes/product.php';
 
 $products = new Product();
 $categories = $products->getCategories();
+$exclusiveProduct = $products->getExclusiveProduct();
 
 if (isset($_SESSION['user_id'])) {
-    echo '<div class="alert alert-success">';
-    echo 'Ajde, ' . 'kutre (' . $_SESSION['username'] . ') ulegni' . '!';
-    echo '</div>';
+   
 }
 ?>
 <!DOCTYPE html>
@@ -19,10 +18,18 @@ if (isset($_SESSION['user_id'])) {
     <title>Product Search</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="public/css/style.css" rel="stylesheet">
-
 </head>
 <body>
     <div class="container">
+        <?php if ($exclusiveProduct): ?>
+            <div id="exclusive-notification" class="alert alert-warning alert-dismissible fade show mt-3" role="alert">
+                <img src="public/product_images/<?php echo htmlspecialchars($exclusiveProduct['image']); ?>" alt="<?php echo htmlspecialchars($exclusiveProduct['name']); ?>" style="width: 50px; height: 50px; margin-right: 10px;">
+                <strong>Exclusive Offer! -50%!!!</strong> Check out our exclusive item: 
+                <a href="product.php?product_id=<?php echo htmlspecialchars($exclusiveProduct['product_id']); ?>" class="alert-link">View Product</a>.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif; ?>
+
         <input type="text" id="search" class="form-control mt-3" placeholder="Search for products...">
         
         <div class="row mt-4">

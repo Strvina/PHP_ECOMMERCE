@@ -16,8 +16,12 @@ CREATE TABLE products (
     price VARCHAR(50) NOT NULL,
     size VARCHAR(50) NOT NULL,
     image VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    type ENUM('exclusive', 'default') NOT NULL DEFAULT 'default',
+    category VARCHAR(255) NOT NULL
 );
+
+
 
 INSERT INTO products (name, price, size, image) VALUES
 ('Heineken', '2.50', '0.5L', 'images/heineken.png'),
