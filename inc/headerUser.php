@@ -30,21 +30,20 @@ $user = new User();
                 <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item active">
-                            <a class="nav-link" href="index.php">Shop</a>
+                            <a class="nav-link" href="../index.php">Shop</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
-
                         <?php if (!$user->is_logged()) : ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="register.php">Register</a>
+                                <a class="nav-link" href="../register.php">Register</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="login.php">Login</a>
+                                <a class="nav-link" href="../login.php">Login</a>
                             </li>
                         <?php else: ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="cart.php">
+                                <a class="nav-link" href="../cart.php">
                                     <svg
                                         version="1.1"
                                         id="Layer_1"
@@ -64,7 +63,7 @@ $user = new User();
                                                     sketch:type="MSShapeGroup"
                                                     class="st0"
                                                     d="M94.5,434.6h24.8l4.7-15.7H92.2l-1.3-8.9H84v4.8h3.1l3.7,27.8h0.1
-                                                    c0,1.9,1.8,3.4,3.9,3.4c2.2,0,3.9-1.5,3.9-3.4h12.8c0,1.9,1.8,3.4,3.9,3.4c2.2,0,3.9-1.5,3.9-3.4h1.7v-3.9l-25.8-0.1L94.5,434.6" />
+                                            c0,1.9,1.8,3.4,3.9,3.4c2.2,0,3.9-1.5,3.9-3.4h12.8c0,1.9,1.8,3.4,3.9,3.4c2.2,0,3.9-1.5,3.9-3.4h1.7v-3.9l-25.8-0.1L94.5,434.6" />
                                             </g>
                                         </g>
                                     </svg>
@@ -72,22 +71,21 @@ $user = new User();
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="orders.php">My Orders</a>
+                                <a class="nav-link" href="../orders.php">My Orders</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <?php echo htmlspecialchars($_SESSION['username']); ?>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="userDropdown">
-                                    <a class="dropdown-item" href="/eCommerceProject/user_pages/profile.php">View Profile</a>
+                                    <a class="dropdown-item" href="profile.php">View Profile</a>
                                     <a class="dropdown-item" href="notifications.php">Notifications</a>
                                     <a class="dropdown-item" href="wishlist.php">My Wishlist</a>
-                                    <a class="dropdown-item" href="/eCommerceProject/user_pages/purchase_history.php">Purchase history</a>
+                                    <a class="dropdown-item" href="purchase_history.php">Purchase history</a>
                                     <a class="dropdown-item" href="contact.php">Contact Support</a>
-                                    <a class="dropdown-item logout-btn" href="logout.php">Logout</a>
+                                    <a class="dropdown-item logout-btn" href="../logout.php">Logout</a>
                                 </div>
                             </li>
-
                         <?php endif; ?>
                     </ul>
                 </div>

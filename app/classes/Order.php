@@ -118,4 +118,12 @@ class Order extends Cart
 
         return true;
     }
+
+    public function getOrdersByUser($userId) {
+        $stmt = $this->conn->prepare("SELECT * FROM orders WHERE user_id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
 }
