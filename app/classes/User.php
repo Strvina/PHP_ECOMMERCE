@@ -26,31 +26,31 @@ class User
         return $result->fetch_all(MYSQLI_ASSOC);
     }
 
-    public function update_profile($user_id, $username, $email, $new_password = null, $photo_path = null)
+    public function update_profile($user_id, $username, $email, $new_password = null, $photo_path = null, $phone_number = null)
     {
         if ($new_password) {
             $hashed_password = password_hash($new_password, PASSWORD_BCRYPT);
-            $query = "UPDATE users SET username = ?, email = ?, password = ?, image = ? WHERE user_id = ?";
+            $query = "UPDATE users SET username = ?, email = ?, password = ?, image = ?, phone_number = ? WHERE user_id = ?";
             $stmt = $this->conn->prepare($query);
-            $stmt->bind_param("ssssi", $username, $email, $hashed_password, $photo_path, $user_id);
+            $stmt->bind_param("sssssi", $username, $email, $hashed_password, $photo_path, $phone_number, $user_id);
         } else {
-            $query = "UPDATE users SET username = ?, email = ?, image = ? WHERE user_id = ?";
+            $query = "UPDATE users SET username = ?, email = ?, image = ?, phone_number = ? WHERE user_id = ?";
             $stmt = $this->conn->prepare($query);
-            $stmt->bind_param("sssi", $username, $email, $photo_path, $user_id);
+            $stmt->bind_param("ssssi", $username, $email, $photo_path, $phone_number, $user_id);
         }
 
         $stmt->execute();
         $stmt->close();
     }
 
-    public function create($name, $username, $email, $password)
+    public function create($name, $username, $email, $password, $phone_number)
     {
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        $sql = "INSERT INTO users (name, username, email, password) VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO users (name, username, email, password, phone_number) VALUES (?, ?, ?, ?, ?)";
         $stmt = $this->conn->prepare($sql);
 
-        $stmt->bind_param("ssss", $name, $username, $email, $hashed_password);
+        $stmt->bind_param("sssss", $name, $username, $email, $hashed_password, $phone_number);
 
         $result = $stmt->execute();
 

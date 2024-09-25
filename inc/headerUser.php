@@ -79,10 +79,7 @@ $user = new User();
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="userDropdown">
                                     <a class="dropdown-item" href="profile.php">View Profile</a>
-                                    <a class="dropdown-item" href="notifications.php">Notifications</a>
-                                    <a class="dropdown-item" href="wishlist.php">My Wishlist</a>
                                     <a class="dropdown-item" href="purchase_history.php">Purchase history</a>
-                                    <a class="dropdown-item" href="contact.php">Contact Support</a>
                                     <a class="dropdown-item logout-btn" href="../logout.php">Logout</a>
                                 </div>
                             </li>

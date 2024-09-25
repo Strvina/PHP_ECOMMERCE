@@ -13,8 +13,9 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
     $username=$_POST['username'];
     $email=$_POST['email'];
     $password=$_POST['password'];
+    $phone_number=$_POST['phone_number'];
 
-    $created=$user->create($name, $username, $email, $password);
+    $created=$user->create($name, $username, $email, $password, $phone_number);
 
     if($created){
         $_SESSION['message']['type']= "success";
@@ -49,6 +50,10 @@ if ($_SERVER["REQUEST_METHOD"]== "POST"){
         <div class="form-group mb-3">
             <label for="password">Password</label>
             <input type="password" class="form-control" name="password" id="password" required>
+        </div>
+        <div class="form-group mb-3">
+            <label for="phone_number">Phone number</label>
+            <input type="text" class="form-control" name="phone_number" id="phone_number" required>
         </div>
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Submit</button>

@@ -38,7 +38,7 @@ ob_end_flush();
 
 <body>
     <div class="container mt-5">
-        <h2 class="mb-4 text-center">My data:</h2>
+        <h2 class="mb-4 text-center">Personal info:</h2>
 
         <div class="card mb-4">
             <div class="card-body text-center">

@@ -1,10 +1,9 @@
 <?php
+ob_start();
 require_once(__DIR__ . '/../app/config/config.php');
 require_once(__DIR__ . '/../app/classes/User.php');
 
-
 $user = new User();
-
 ?>
 
 <!DOCTYPE html>
@@ -20,7 +19,6 @@ $user = new User();
 
 <body>
     <div class="container">
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
             <div class="container">
                 <a class="navbar-brand" href="#">Čekminska zadruga</a>
@@ -34,7 +32,6 @@ $user = new User();
                         </li>
                     </ul>
                     <ul class="navbar-nav ml-auto">
-
                         <?php if (!$user->is_logged()) : ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="register.php">Register</a>
@@ -83,11 +80,9 @@ $user = new User();
                                     <a class="dropdown-item" href="notifications.php">Notifications</a>
                                     <a class="dropdown-item" href="wishlist.php">My Wishlist</a>
                                     <a class="dropdown-item" href="/eCommerceProject/user_pages/purchase_history.php">Purchase history</a>
-                                    <a class="dropdown-item" href="contact.php">Contact Support</a>
                                     <a class="dropdown-item logout-btn" href="logout.php">Logout</a>
                                 </div>
                             </li>
-
                         <?php endif; ?>
                     </ul>
                 </div>

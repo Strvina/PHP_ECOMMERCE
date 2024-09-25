@@ -26,26 +26,38 @@ class Order extends Cart
             $stmt->bind_param("iis", $order_id, $item['product_id'], $item['quantity']);
             $stmt->execute();
         }
+
+        // Add to orders_history
+        $this->addToHistory($order_id, $_SESSION["user_id"], $delivery_address, 'pending');
+
         $this->destroy_cart();
     }
 
+    private function addToHistory($order_id, $user_id, $delivery_address, $status)
+    {
+        $stmt = $this->conn->prepare("INSERT INTO orders_history (order_id, user_id, delivery_address, status) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("iiss", $order_id, $user_id, $delivery_address, $status);
+        $stmt->execute();
+    }
 
     public function get_orders()
     {
-        $sql = "SELECT orders.order_id, orders.delivery_address, orders.created_at, orders.status, 
-                order_items.quantity, products.name, products.image, products.price, products.size,
-                users.username AS user_name
+        $user_id = $_SESSION['user_id'];
+
+        $sql = "SELECT orders.order_id, orders.delivery_address, orders.created_at, order_items.quantity, products.name, products.image, products.price, products.size
                 FROM orders
                 INNER JOIN order_items ON orders.order_id = order_items.order_id
-                INNER JOIN products ON order_items.product_id = products.product_id
-                INNER JOIN users ON orders.user_id = users.user_id";
+                INNER JOIN products ON order_items.product_id=products.product_id
+                WHERE orders.user_id = ?";
 
         $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param('i', $user_id);
         $stmt->execute();
         $result = $stmt->get_result();
 
         return $result->fetch_all(MYSQLI_ASSOC);
     }
+
 
     public function cancel_order($order_id)
     {
@@ -65,21 +77,23 @@ class Order extends Cart
         $stmt->execute();
     }
 
-    public function delete_order($order_id) {
+    public function delete_order($order_id)
+    {
         $stmt = $this->conn->prepare("DELETE FROM order_items WHERE order_id = ?");
         $stmt->bind_param("i", $order_id);
         $stmt->execute();
         $stmt->close();
-    
+
         // Delete the order
         $stmt = $this->conn->prepare("DELETE FROM orders WHERE order_id = ?");
         $stmt->bind_param("i", $order_id);
         $stmt->execute();
         $stmt->close();
     }
-    
 
-    public function get_order_by_id($order_id) {
+
+    public function get_order_by_id($order_id)
+    {
         $query = "
             SELECT orders.order_id, orders.delivery_address, orders.created_at, orders.status,
                    order_items.product_id, order_items.quantity
@@ -89,7 +103,7 @@ class Order extends Cart
         ";
 
         $stmt = $this->conn->prepare($query);
-        $stmt->bind_param("i", $order_id);  
+        $stmt->bind_param("i", $order_id);
         $stmt->execute();
         $result = $stmt->get_result();
 
@@ -102,14 +116,12 @@ class Order extends Cart
         return $order_details;
     }
 
-    // Update order
-    public function update_order($order_id, $status, $delivery_address, $quantities) {
-        // Update order details
+    public function update_order($order_id, $status, $delivery_address, $quantities)
+    {
         $stmt = $this->conn->prepare("UPDATE orders SET status = ?, delivery_address = ? WHERE order_id = ?");
         $stmt->bind_param("ssi", $status, $delivery_address, $order_id);
         $stmt->execute();
 
-        // Update order items
         foreach ($quantities as $product_id => $quantity) {
             $stmt = $this->conn->prepare("UPDATE order_items SET quantity = ? WHERE order_id = ? AND product_id = ?");
             $stmt->bind_param("iis", $quantity, $order_id, $product_id);
@@ -119,8 +131,18 @@ class Order extends Cart
         return true;
     }
 
-    public function getOrdersByUser($userId) {
+    public function getOrdersByUser($userId)
+    {
         $stmt = $this->conn->prepare("SELECT * FROM orders WHERE user_id = ?");
+        $stmt->bind_param("i", $userId);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_all(MYSQLI_ASSOC);
+    }
+
+    public function getHistoryOrdersByUser($userId)
+    {
+        $stmt = $this->conn->prepare("SELECT * FROM orders_history WHERE user_id = ?");
         $stmt->bind_param("i", $userId);
         $stmt->execute();
         $result = $stmt->get_result();

@@ -20,11 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST['email'];
     $new_password = !empty($_POST['new_password']) ? $_POST['new_password'] : null;
     $photo_path = $_POST['photo_path'];
+    $phone = $_POST['phone_number'];
 
-    // Debugging: log the received photo path
-    error_log("Received photo path: " . $photo_path);
-
-    $user->update_profile($user_id, $username, $email, $new_password, $photo_path);
+    $user->update_profile($user_id, $username, $email, $new_password, $photo_path, $phone);
 
     $_SESSION['message'] = [
         'type' => 'success',
@@ -78,6 +76,11 @@ ob_end_flush();
             </div>
 
             <div class="form-group">
+                <label for="phone">Add Phone Number/Change:</label>
+                <input type="tel" id="phone_number" name="phone_number" class="form-control" value="<?php echo htmlspecialchars($user_data['phone_number']); ?>" required>
+            </div>
+
+            <div class="form-group">
                 <label for="new_password">New Password:</label>
                 <input type="password" id="new_password" name="new_password" class="form-control">
             </div>
@@ -104,22 +107,22 @@ ob_end_flush();
     <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 
     <script>
-    Dropzone.options.dropzoneUpload = {
-        url: "upload_photo.php",
-        paramName: "photo",
-        maxFilesize: 20,
-        acceptedFiles: "image/*",
-        init: function () {
-            this.on("success", function (file, response) {
-                const jsonResponse = JSON.parse(response);
-                if (jsonResponse.success) {
-                    document.getElementById('photoPathInput').value = jsonResponse.photo_path;
-                } else {
-                    console.error(jsonResponse.error);
-                }
-            });
-        }
-    };
+        Dropzone.options.dropzoneUpload = {
+            url: "upload_photo.php",
+            paramName: "photo",
+            maxFilesize: 20,
+            acceptedFiles: "image/*",
+            init: function() {
+                this.on("success", function(file, response) {
+                    const jsonResponse = JSON.parse(response);
+                    if (jsonResponse.success) {
+                        document.getElementById('photoPathInput').value = jsonResponse.photo_path;
+                    } else {
+                        console.error(jsonResponse.error);
+                    }
+                });
+            }
+        };
     </script>
 </body>
 

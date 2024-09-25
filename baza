@@ -1,14 +1,32 @@
-create database shop;
+create database zadruga;
+
+USE zadruga;
 
 CREATE TABLE users (
     user_id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
-    is_admin TINYINT(1) NOT NULL DEFAULT 0,
+    is_admin ENUM('0', '1', 'tatko') NOT NULL DEFAULT '0',
     password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    image VARCHAR(255) DEFAULT NULL,
+    phone_number VARCHAR(20) DEFAULT NULL
 );
+
+INSERT INTO users (user_id, name, username, email, is_admin, password, created_at, image, phone_number) VALUES
+(1, 'Vlax', 'Strvina', 'strvina@gmail.com', '0', '$2y$10$oosOYCk4V1iyAKpHGSv/KO81B3zClK1bvqMq/lAwcj4ExYA.fE/nm', '2024-08-20 11:11:58', NULL, '0616'),
+(4, 'sdfa', 'wer', 'qwerf@gmail.com', '0', '$2y$10$Td.7Bz/HMObgcZIzGd3aqueO7s/Vgx1tv0jhO0MM.WVDQpBamiZRO', '2024-08-20 11:25:24', NULL, NULL),
+(5, 'Vladimir', 'Cicni', 'cicni@gmail.com', '0', '$2y$10$ZYyyFeMRaOHrXodyPjUXyudjBq4bxKQrTUh2nBtcDNRn05SILJb46', '2024-08-20 12:16:43', NULL, NULL),
+(7, 'Vladimir', 'Vlax', 'vlax123@gmail.com', '0', '$2y$10$yVIruJSNVpCEKfovAlgNPewkHOaKuG0e1jx5fHDtt5j3he/xk2ASq', '2024-08-20 12:32:37', 'i.png', '0616836457'),
+(8, 'Mihailo', 'kosta', 'kosta@gmail.com', '0', '$2y$10$AugASPoALkzfEHWDg1Jz4O7ZXcTvm2bgIiG7Ebz7yT118ZZsBYYX.', '2024-08-20 12:45:31', NULL, NULL),
+(10, 'Vladimir', 'Otac', 'vladimirotac@gmail.com', 'tatko', '$2y$10$6SVurfArJzhIMSCiB5GAYuSjWXdjAapmDqRUNgttDGIZWHshsZSXi', '2024-08-27 15:36:04', NULL, NULL),
+(11, 'Admin', 'Admin', 'admin@gmail.com', '1', '$2y$10$pHdN9aRzpUuqeAQ8wAyeyOUE8K3jwtFFP7KK/P7ii2C/c288Xwoou', '2024-08-29 19:49:44', NULL, NULL),
+(12, 'Cislja', 'Cislja', 'cislja@gmail.com', '0', '$2y$10$zG55ACMGLk9FzmLW6oBMrOpiIci0kLJgLNA8hl/UaeP0axfBIlC7W', '2024-08-30 13:42:28', NULL, NULL),
+(13, 'Jovan', 'Joca', 'joca@gmail.com', '0', '$2y$10$Pq1gUyyG6c08NdhPe1KUzOa..JooNcno9ZrEZp5jfM5jFfN9Rtp52', '2024-09-13 23:40:08', NULL, NULL),
+(15, 'Predrag', 'Hrubes', 'hrubes@gmail.com', '0', '$2y$10$ULWfPX1ib2mJykDnXkhBCOCRwAe.bUfceJQf5jl.MKAkQ4XjZMfUq', '2024-09-19 20:16:28', '459412589_1586140985324001_5321729578526396133_n.jpg', '061232434234'),
+(16, 'bojana', 'bujana', 'bujana@gmail.com', '0', '$2y$10$eENVu1HD755/oIL0VvxjuOLYzywHCRMvBNiwn.rlpJ0idhfvv.Kb6', '2024-09-25 17:42:59', '', '0612332423');
+
 
 CREATE TABLE products (
     product_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -21,15 +39,15 @@ CREATE TABLE products (
     category VARCHAR(255) NOT NULL
 );
 
-
-
-INSERT INTO products (name, price, size, image) VALUES
-('Heineken', '2.50', '0.5L', 'images/heineken.png'),
-('Jelen Pivo', '1.80', '0.5L', 'images/jelen.png'),
-('Budweiser', '2.70', '0.5L', 'images/budweiser.png'),
-('Tuborg', '2.20', '0.5L', 'images/tuborg.png'),
-('Stella Artois', '2.90', '0.5L', 'images/stella_artois.png'),
-('Corona', '3.00', '0.33L', 'images/corona.png');
+-- New product entries
+INSERT INTO products (product_id, name, price, size, image, created_at, category, type) VALUES
+(10, 'Heineken', '1', '0.26L', 'Heineken.jpg', '2024-08-29 13:33:47', 'Pivarija', 'exclusive'),
+(11, 'Jelen', '0.50', '0.5L', 'Jelen.jpg', '2024-08-29 13:35:58', 'Pivarija', 'exclusive'),
+(12, 'Nikšićko', '0.50', '0.5l', 'Niksicko.jpg', '2024-08-29 13:57:34', 'Pivarija', 'default'),
+(13, 'Zajecarsko', '0.60', '0.5l', 'Zajecaravc.jpg', '2024-08-29 13:58:22', 'Pivarija', 'default'),
+(14, 'King Majestic', '2', '100ml', 'king majestic.png', '2024-08-29 14:02:32', 'Sladoled', 'default'),
+(15, 'Quattro Plazma', '5', '1500ml', 'quattro.jpeg', '2024-08-29 14:03:44', 'Sladoled', 'default'),
+(20, 'Coca cola', '0.80', '0.25l', 'cocacola.jpg', '2024-09-12 23:38:15', 'Sok', 'default');
 
 CREATE TABLE cart (
     cart_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -40,12 +58,28 @@ CREATE TABLE cart (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
+INSERT INTO cart (cart_id, user_id, product_id, quantity) VALUES
+(16, 12, 14, '1'),
+(17, 12, 10, '5');
+
 CREATE TABLE orders (
     order_id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     delivery_address VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('primljeno', 'poslato', 'stiglo', 'otkazano') DEFAULT 'primljeno',
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
+
+INSERT INTO orders (order_id, user_id, delivery_address, created_at, status) VALUES
+(21, 13, 'rtet, rewt, wert, wert', '2024-09-13 23:43:55', 'primljeno'),
+(22, 7, 'sdf, werqw, qwer, q', '2024-09-14 00:18:33', 'poslato'),
+(25, 7, '123, 123, 123, 123', '2024-09-14 00:48:43', 'stiglo'),
+(30, 15, 'hb, jhv, tgcrgrct, tgcct', '2024-09-19 20:32:53', 'primljeno'),
+(32, 15, 'wer, qwer, qwer, qwer', '2024-09-19 22:30:59', 'primljeno'),
+(33, 15, 'fdsadf, asdf, asdf, asdf', '2024-09-20 00:29:27', ''),
+(34, 15, 'we, f, f, we', '2024-09-20 01:09:21', 'primljeno'),
+(35, 16, 'Srbija, Cekmin, bb, 16251', '2024-09-25 19:31:17', 'primljeno');
 
 CREATE TABLE order_items (
     order_items_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -56,3 +90,35 @@ CREATE TABLE order_items (
     FOREIGN KEY (product_id) REFERENCES products(product_id)
 );
 
+INSERT INTO order_items (order_items_id, order_id, product_id, quantity) VALUES
+(94, 22, 10, '1'),
+(97, 25, 10, '123'),
+(106, 34, 11, '2'),
+(107, 35, 15, '5');
+
+CREATE TABLE orders_history (
+    history_id INT AUTO_INCREMENT PRIMARY KEY,
+    order_id INT NOT NULL,
+    user_id INT NOT NULL,
+    delivery_address VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    status ENUM('pending', 'completed', 'canceled') NOT NULL DEFAULT 'pending',
+    FOREIGN KEY (order_id) REFERENCES orders(order_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+
+INSERT INTO orders_history (history_id, order_id, user_id, delivery_address, created_at, status) VALUES
+(1, 32, 15, 'wer, qwer, qwer, qwer', '2024-09-19 22:30:59', 'pending'),
+(5, 30, 15, 'hb, jhv, tgcrgrct, tgcct', '2024-09-19 20:32:53', ''),
+(9, 33, 15, 'fdsadf, asdf, asdf, asdf', '2024-09-20 00:29:27', 'pending'),
+(10, 34, 15, 'we, f, f, we', '2024-09-20 01:09:21', 'pending'),
+(11, 35, 16, 'Srbija, Cekmin, bb, 16251', '2024-09-25 19:31:17', 'pending');
+
+CREATE TABLE wishlist (
+    wishlist_id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    product_id INT NOT NULL,
+    added_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products(product_id) ON DELETE CASCADE
+);

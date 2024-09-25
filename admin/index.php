@@ -46,7 +46,7 @@ $products = $products->izlistajSve();
     <div class="container mt-4">
         <h2>Product List</h2>
         <div class="alert alert-success">
-            Dobrodošao, tatice!
+            Dobrodošao, oce!
         </div>
         <a href="add_product.php" class="btn btn-success mb-3">Add Product</a>
         <table class="table table-striped">
