@@ -39,7 +39,6 @@ CREATE TABLE products (
     category VARCHAR(255) NOT NULL
 );
 
--- New product entries
 INSERT INTO products (product_id, name, price, size, image, created_at, category, type) VALUES
 (10, 'Heineken', '1', '0.26L', 'Heineken.jpg', '2024-08-29 13:33:47', 'Pivarija', 'exclusive'),
 (11, 'Jelen', '0.50', '0.5L', 'Jelen.jpg', '2024-08-29 13:35:58', 'Pivarija', 'exclusive'),
