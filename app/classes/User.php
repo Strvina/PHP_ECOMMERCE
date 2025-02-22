@@ -96,12 +96,12 @@ class User
         $result = $stmt->get_result()->fetch_assoc();
 
         if ($result['is_admin'] !== 'tatko') {
-            // Proceed to demote
+            // ako nije tatko
             $stmt = $this->conn->prepare("UPDATE users SET is_admin = '0' WHERE user_id = ?");
             $stmt->bind_param('i', $user_id);
             return $stmt->execute();
         } else {
-            return false; // Deny demotion
+            return false;
         }
     }
 
