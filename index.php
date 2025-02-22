@@ -7,7 +7,7 @@ $categories = $products->getCategories();
 $exclusiveProduct = $products->getExclusiveProduct();
 
 if (isset($_SESSION['user_id'])) {
-   
+
 }
 ?>
 <!DOCTYPE html>
