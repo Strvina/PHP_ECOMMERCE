@@ -93,7 +93,7 @@ $orders = $order->get_orders();
                             <?php echo htmlspecialchars($order['status']); ?>
                         </td>
                         <td>
-                            <!-- Update Status Form -->
+                           
                             <div class="mb-2">
                                 <form action="orders_status.php" method="post">
                                     <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
@@ -108,7 +108,7 @@ $orders = $order->get_orders();
                                 </form>
                             </div>
 
-                            <!-- Delete Order Form -->
+                            
                             <div class="mb-2">
                                 <form action="orders_status.php" method="post">
                                     <input type="hidden" name="order_id" value="<?php echo htmlspecialchars($order['order_id']); ?>">
@@ -117,7 +117,7 @@ $orders = $order->get_orders();
                                 </form>
                             </div>
 
-                            <!-- Edit Order Link -->
+                          
                             <div class="mb-2">
                                 <a href="edit_order.php?id=<?php echo htmlspecialchars($order['order_id']); ?>" class="btn btn-warning btn-block mt-2">Edit Order</a>
                             </div>
