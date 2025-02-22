@@ -27,7 +27,7 @@ class Order extends Cart
             $stmt->execute();
         }
 
-        // Add to orders_history
+        
         $this->addToHistory($order_id, $_SESSION["user_id"], $delivery_address, 'pending');
 
         $this->destroy_cart();
@@ -84,7 +84,7 @@ class Order extends Cart
         $stmt->execute();
         $stmt->close();
 
-        // Delete the order
+        
         $stmt = $this->conn->prepare("DELETE FROM orders WHERE order_id = ?");
         $stmt->bind_param("i", $order_id);
         $stmt->execute();
@@ -107,7 +107,7 @@ class Order extends Cart
         $stmt->execute();
         $result = $stmt->get_result();
 
-        // Fetch all rows and group them by order_id
+        
         $order_details = array();
         while ($row = $result->fetch_assoc()) {
             $order_details[] = $row;
