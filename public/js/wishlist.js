@@ -5,7 +5,6 @@
             const currentAction = this.getAttribute('data-action');
             const icon = this.querySelector('i');
 
-            // Send AJAX request to update the wishlist
             fetch('wishlist.php', {
                 method: 'POST',
                 headers: {
