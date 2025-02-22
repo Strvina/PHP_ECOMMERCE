@@ -1,14 +1,14 @@
-.status-primljeno { background-color: #d4edda; } /* Green */
-.status-poslato { background-color: #fff3cd; }   /* Yellow */
-.status-stiglo { background-color: #cce5ff; }    /* Blue */
-.status-otkazano { background-color: #f8d7da; }  /* Red */
+.status-primljeno { background-color: #d4edda; }
+.status-poslato { background-color: #fff3cd; }
+.status-stiglo { background-color: #cce5ff; }
+.status-otkazano { background-color: #f8d7da; }
 
 .wishlist-icon {
     font-size: 24px;
     cursor: pointer;
-    color: gray; /* Default color */
+    color: gray;
 }
 
 .wishlist-icon.added {
-    color: gold; /* Color when added to wishlist */
+    color: gold;
 }
